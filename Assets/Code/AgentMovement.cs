@@ -19,16 +19,6 @@ public class AgentMovement : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D> ();
 	}
 
-	// Use this for initialization
-	void Start () {
-	}
-
-
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	void FixedUpdate(){
 

@@ -14,12 +14,11 @@ public class DynamicPursue : MonoBehaviour {
 	protected virtual void Awake(){
 		agent = GetComponent<AgentMovement> ();
 	}
-	// Use this for initialization
-	protected virtual void Start () {
-		
-	}
-	
-	// Update is called once per frame
+
+    protected virtual void Start () {
+        ///////
+    }
+
 	protected virtual void Update () {
 		if (target == null) {
 			return;
