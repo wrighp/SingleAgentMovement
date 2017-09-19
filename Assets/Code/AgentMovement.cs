@@ -7,14 +7,12 @@ public class AgentMovement : MonoBehaviour {
 
 	public float maxAcceleration;
 	public float maxSpeed;
-	public float acceleration;
+	public float acceleration; //Should be scaled between 0 and 1
 
 	public float maxAngularAcceleration;
 	public float maxAngularSpeed;
-	public float angularAcceleration;
-
-	public Vector2 forceDirection = Vector2.zero;
-
+	public float angularAcceleration; //Scale between 0 and 1
+	public Vector2 targetDirection = Vector2.zero;
 	Rigidbody2D rb;
 
 	void Awake(){
@@ -24,7 +22,9 @@ public class AgentMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	}
-	
+
+
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -32,17 +32,41 @@ public class AgentMovement : MonoBehaviour {
 
 	void FixedUpdate(){
 
-		rb.AddForce(forceDirection * Mathf.Min(maxAcceleration, acceleration));
-		forceDirection = Vector2.zero;
+		rb.AddForce(transform.up * Mathf.Min(maxAcceleration, acceleration * maxAcceleration));
+		Debug.DrawRay (transform.position, transform.up);
 		//This clamping is not actually accurate as the addForce will increase the speed for a frame after
 		//If you disable force when speed is over max speed that creates hysteresis
 		//A correct force reduction is more complicated
 		rb.velocity = Vector2.ClampMagnitude (rb.velocity, maxSpeed);
 
+		TurnToTarget ();
+	
+	}
+
+	void TurnToTarget(){
+		targetDirection.Normalize ();
+
+		Vector2 forwardDirection = transform.up;
+
+		//get relative angle to target angle
+		Vector3 cross = Vector3.Cross(targetDirection, forwardDirection);
+		float sign = Mathf.Sign(cross.z);
+		float angle = Vector2.Angle (targetDirection, forwardDirection);
+
 		//Clamps max acceleration and max speed
-		rb.angularVelocity = rb.angularVelocity + Mathf.Clamp (angularAcceleration, -maxAngularAcceleration, maxAngularAcceleration);
 		rb.angularVelocity = Mathf.Clamp (rb.angularVelocity, -maxAngularSpeed, maxAngularSpeed);
-	
-	
+
+		//Snap to rotation if within 1 degree of target or expected to overshoot target next frame
+		if (Mathf.Abs (angle) < Mathf.Max (Mathf.Abs (rb.angularVelocity) * Time.fixedDeltaTime * 4f, 1f)) {
+			rb.angularVelocity = 0;
+			//Set absolute rotation to lock it
+			float targetAngle = Mathf.Atan2 (targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+			transform.rotation = Quaternion.AngleAxis (targetAngle - 90f, Vector3.forward);
+		}
+		else {
+			rb.AddTorque (-sign * angularAcceleration * maxAngularAcceleration);
+		}
+
+
 	}
 }
