@@ -29,4 +29,15 @@ public class DynamicPathFollow : MonoBehaviour {
             path_index = (path_index + 1)%my_path.points.Count;
         }
 	}
+
+	protected virtual void OnDrawGizmos(){
+		if (my_path == null || !enabled) {
+			return;
+		}
+		Vector3 target = my_path.points[path_index].position;
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine (transform.position, target);
+		//Gizmos.DrawSphere( target, .25f);
+
+	}
 }
