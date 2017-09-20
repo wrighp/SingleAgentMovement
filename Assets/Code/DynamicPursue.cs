@@ -43,8 +43,8 @@ public class DynamicPursue : MonoBehaviour {
 
 		agent.targetDirection = (Vector3)(targetPosition) -  transform.position;
 	}
-	void OnDrawGizmos(){
-		if (target == null) {
+	protected virtual void OnDrawGizmos(){
+		if (target == null || !enabled) {
 			return;
 		}
 		Gizmos.color = Color.red;
