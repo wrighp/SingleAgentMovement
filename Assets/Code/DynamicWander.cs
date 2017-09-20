@@ -5,7 +5,7 @@ using UnityEngine;
 public class DynamicWander : DynamicPursue {
 
 	public float circleDistance = 4f;
-	public float circleRadius = 2f;
+	public float circleRadius = 3f;
 	public float maxDistance = .5f; //How close agent can get to target before making new target
 	public float maxTime = 3f; //Max seconds agent can go towards a target before it must select new target (prevents getting stuck)
 
