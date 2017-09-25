@@ -30,14 +30,7 @@ public class DynamicPathFollow : MonoBehaviour {
         }
 	}
 
-	protected virtual void OnDrawGizmos(){
-		if (my_path == null || !enabled) {
-			return;
-		}
-		Vector3 target = my_path.points[path_index].position;
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine (transform.position, target);
-		//Gizmos.DrawSphere( target, .25f);
-
+	void LateUpdate(){
+		PlayerDebug.DrawLine (transform.position,  my_path.points[path_index].position, Color.red);
 	}
 }

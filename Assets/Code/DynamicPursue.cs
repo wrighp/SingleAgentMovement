@@ -16,7 +16,7 @@ public class DynamicPursue : MonoBehaviour {
 	}
 
     protected virtual void Start () {
-        ///////
+       
     }
 
 	protected virtual void Update () {
@@ -43,12 +43,17 @@ public class DynamicPursue : MonoBehaviour {
 
 		agent.targetDirection = (Vector3)(targetPosition) -  transform.position;
 	}
+
+	void LateUpdate(){
+		PlayerDebug.DrawLine (target.position, targetPosition, Color.red);
+		PlayerDebug.DrawCircle(targetPosition, .125f, Color.red);
+	}
+
 	protected virtual void OnDrawGizmos(){
 		if (target == null || !enabled) {
 			return;
 		}
 		Gizmos.color = Color.red;
-		Gizmos.DrawLine (target.position, targetPosition);
 		Gizmos.DrawSphere( targetPosition,.125f);
 	}
 }

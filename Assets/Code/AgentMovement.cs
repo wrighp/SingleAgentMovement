@@ -23,7 +23,7 @@ public class AgentMovement : MonoBehaviour {
 	void FixedUpdate(){
 
 		rb.AddForce(transform.up * Mathf.Min(maxAcceleration, acceleration * maxAcceleration));
-		Debug.DrawRay (transform.position, transform.up);
+		PlayerDebug.DrawRay (transform.position, transform.up, Color.white);
 		//This clamping is not actually accurate as the addForce will increase the speed for a frame after
 		//If you disable force when speed is over max speed that creates hysteresis
 		//A correct force reduction is more complicated

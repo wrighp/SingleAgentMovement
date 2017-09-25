@@ -14,15 +14,12 @@ public class Path : MonoBehaviour {
 		
 	}
 
-    void OnDrawGizmos() {
+    void LateUpdate() {
         if (points.Count >= 2) {
             for (int i = 1; i < points.Count; i++) {
-                Gizmos.color = Color.blue;
-                Gizmos.DrawLine(points[i-1].transform.position, points[i].transform.position);
+				PlayerDebug.DrawLine(points[i-1].transform.position, points[i].transform.position, Color.blue);
             }
-
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(points[0].transform.position, points[points.Count-1].transform.position);
+			PlayerDebug.DrawLine(points[0].transform.position, points[points.Count-1].transform.position, Color.cyan);
         }
     }
 }

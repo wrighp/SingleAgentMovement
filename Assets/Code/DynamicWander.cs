@@ -34,7 +34,7 @@ public class DynamicWander : DynamicPursue {
 		{
 			//Raycast forward so agent may eventually move from wall (wander target won't go past wall)
 			var raycast = Physics2D.Raycast(pos, transform.up, circleDistance);
-			Debug.DrawRay(pos, transform.up * circleDistance,Color.blue,.5f);
+			PlayerDebug.DrawRay(pos, transform.up * circleDistance,Color.blue,.5f);
 			//Rigidbody will be null if nothing hit
 			float dist = (raycast.rigidbody == null) ? circleDistance : raycast.distance;
 			circlePosition = transform.position + transform.up * dist;
@@ -42,21 +42,32 @@ public class DynamicWander : DynamicPursue {
 			timer = maxTime;
 		}
 	}
-
+	void LateUpdate(){
+		//Outer circle
+		Color outerColor = new Color(1f, 0, 0, .25f * timer / maxTime);
+		PlayerDebug.DrawCircle(circlePosition, circleRadius, outerColor);
+		//Inner Circle
+		PlayerDebug.DrawLine (transform.position, target.position, Color.red);
+		PlayerDebug.DrawCircle(target.position, maxDistance/2f, Color.red);
+	}
 	protected override void OnDrawGizmos(){
 		//base.OnDrawGizmos();
 
 		if(!enabled || target == null){
 			return;
 		}
-		Gizmos.color = new Color(1f, 0, 0, .25f * timer / maxTime);
+		//Outer circle
+		Color outerColor = new Color(1f, 0, 0, .25f * timer / maxTime);
+		Gizmos.color = outerColor;
 		Gizmos.DrawSphere(circlePosition, circleRadius);
+		PlayerDebug.DrawCircle(circlePosition, circleRadius, outerColor);
+
+		//Inner circle
 		Gizmos.color = Color.red;
-		Gizmos.DrawLine (transform.position, target.position);
-		Gizmos.DrawSphere( target.position, maxDistance);
+		Gizmos.DrawSphere( target.position, maxDistance/2f);
 	}
 
-	void onDestroy(){
+	void OnDestroy(){
 		Destroy(target.gameObject);
 	}
 }
