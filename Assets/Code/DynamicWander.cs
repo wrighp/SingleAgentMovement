@@ -68,6 +68,9 @@ public class DynamicWander : DynamicPursue {
 	}
 
 	void OnDestroy(){
+		if(target == null){
+			return;
+		}
 		Destroy(target.gameObject);
 	}
 }
