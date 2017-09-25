@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 23028271609986816}
   - component: {fileID: 50292305328448346}
   - component: {fileID: 114967842540416446}
-  - component: {fileID: 61548739548898668}
-  - component: {fileID: 114267448639460776}
+  - component: {fileID: 58746452975412284}
+  - component: {fileID: 114940075818410636}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1419443830689840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.99, y: 0, z: 0}
-  m_LocalScale: {x: 0.29, y: 0.55, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ed37a6da593cbff4789292074cd288b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,8 +104,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61548739548898668
-BoxCollider2D:
+--- !u!58 &58746452975412284
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -117,19 +117,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &114267448639460776
+  m_Radius: 0.6
+--- !u!114 &114940075818410636
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -137,10 +127,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1419443830689840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c048cdf6745827548a6aa7e798db082f, type: 3}
+  m_Script: {fileID: 11500000, guid: 58df4f24fa6309140a26c81a664dd7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeStep: 0.5
   target: {fileID: 0}
+  circleDistance: 4
+  circleRadius: 3
+  maxDistance: 0.5
+  maxTime: 3
 --- !u!114 &114967842540416446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,10 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f4d61e354fff04fbe3dd7dfba190cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAcceleration: 0.5
-  maxSpeed: 1
+  maxAcceleration: 10
+  maxSpeed: 2.2
   acceleration: 1
-  maxAngularAcceleration: 10
-  maxAngularSpeed: 15
+  maxAngularAcceleration: 25
+  maxAngularSpeed: 50
   angularAcceleration: 1
   targetDirection: {x: 0, y: -1}

@@ -33,12 +33,24 @@ public class DynamicWander : DynamicPursue {
 		if(Vector2.Distance(target.position,pos) < maxDistance || timer <= 0)
 		{
 			//Raycast forward so agent may eventually move from wall (wander target won't go past wall)
-			var raycast = Physics2D.Raycast(pos, transform.up, circleDistance);
+			RaycastHit2D raycast = Physics2D.Raycast(pos, transform.up, circleDistance);
 			PlayerDebug.DrawRay(pos, transform.up * circleDistance,Color.blue,.5f);
+
+
 			//Rigidbody will be null if nothing hit
 			float dist = (raycast.rigidbody == null) ? circleDistance : raycast.distance;
 			circlePosition = transform.position + transform.up * dist;
-			target.position = (Vector3)(Random.insideUnitCircle * circleRadius + circlePosition);
+
+            
+            bool position_within_bounds = false;
+            while (!position_within_bounds) {
+                target.position = (Vector3)(Random.insideUnitCircle * circleRadius + circlePosition);
+                if (Physics2D.Raycast(pos, target.position - transform.position, Vector3.Distance(target.position,transform.position)).rigidbody == null) {
+                    position_within_bounds = true;
+                    print("found a position");
+                }
+            }
+            
 			timer = maxTime;
 		}
 	}
